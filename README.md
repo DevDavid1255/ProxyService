@@ -170,6 +170,7 @@ Example response:
 
 **Notes**
 
+
 - Requests use https by default, if the endpoint you are trying to access does not support https you must override the protocol (see API above).
 - Despite using https, server certificates aren't actually validated. If you want to do so you'll have to deal with installing client certificates.
 - Although the appending process seems simple at first (just write the extra data after the proxy response has been received), it becomes a lot more complicated when factoring in encodings. In order to add additional data the server has to first decode the response, append the data, and then re-encode the entire thing. Two alternative methods are available: one is to decode and not re-encode (sacrificing bandwidth for server performance), and the other is to append a separate gzip file to the request. The latter option seems to be the most ideal overall, but unfortunately it is not stable: that is, it is not supported by any spec, yet occasionally a client will support it because of the way they implement gzip. The Roblox client does not support this, unfortunately, but this proxy was created with non-Roblox clients in mind. To change the way the server handles encoded data you can change the `GZIP_METHOD` environment variable to any of these three values: `["transform", "decode", "append"]`.
